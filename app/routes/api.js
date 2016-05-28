@@ -8,8 +8,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/posts', function(req, res, next) {
-    console.log(Post.get());
-    res.json({'posts': Post.get()});
+    // res.json({'posts': Post.get()});
+    Post(req, res, next).get();
 });
 
 module.exports = router;

@@ -1,13 +1,15 @@
 var mongoose = require('mongoose');
 var Post = require('../models/Post');
 
-var PostRepo = function() {
+var PostRepo = function(req, res, next) {
     var _priv = {
         get : function() {
-            Post.find(function (err, posts) {
-                if (err) return 'Error';
-                console.log(posts);
+            var promise = Post.find().exec();
+            promise.then(function(posts) {
+                res.json({'posts': posts});
                 return posts;
+            }).catch(function(err) {
+                res.status(500).json({'error':  err});
             });
         }
     }
@@ -16,6 +18,6 @@ var PostRepo = function() {
             return _priv.get();
         }
     }
-}();
+};
 
 module.exports = PostRepo;
